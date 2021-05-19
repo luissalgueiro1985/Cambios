@@ -1,52 +1,74 @@
 ﻿using Cambios.Modelos;
+using Cambios.Serviços;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Cambios
 {
     public partial class Form1 : Form
     {
+        #region Atributos
+
+        private NetworkService networkService;
+
+        private ApiService apiService;
+
+        #endregion
+
+        public List<Rate> Rates { get; set; } = new List<Rate>();
+
         public Form1()
         {
             InitializeComponent();
+            networkService = new NetworkService();
+            apiService = new ApiService();
             LoadRates();
         }
 
         private async void LoadRates()
         {
             //bool load;
-            ProgressBar1.Value = 0;
 
-            var client = new HttpClient();
+            LabelResultado.Text = "A actualizar taxas...";
 
-            client.BaseAddress = new Uri("http://cambios.somee.com");
+            var connection = networkService.CheckConnection();
 
-            var response = await client.GetAsync("/api/rates");
-
-            var result = await response.Content.ReadAsStringAsync();
-
-            if (!response.IsSuccessStatusCode)
+            if(!connection.IsSucess)
             {
-                MessageBox.Show(response.ReasonPhrase);
+                MessageBox.Show(connection.Message);
                 return;
             }
+            else
+            {
+                await LoadApiRates();
+            }
 
-            var rates = JsonConvert.DeserializeObject<List<Rate>>(result);
-
-            ComboBoxOrigem.DataSource = rates;
+            ComboBoxOrigem.DataSource = Rates;
             ComboBoxOrigem.DisplayMember = "Name";
 
             //corrige bug da microsoft
             ComboBoxDestino.BindingContext = new BindingContext();
 
-            ComboBoxDestino.DataSource = rates;
+            ComboBoxDestino.DataSource = Rates;
             ComboBoxDestino.DisplayMember = "Name";
 
             ProgressBar1.Value = 100;
 
+            LabelResultado.Text = "Taxas carregadas...";
+
+        }
+
+        private async Task LoadApiRates()
+        {
+            ProgressBar1.Value = 0;
+
+            var response = await apiService.GetRates("http://cambios.somee.com", "/api/rates");
+
+            Rates = (List<Rate>)response.Result;
         }
     }
 }
