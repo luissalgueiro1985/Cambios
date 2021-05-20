@@ -1,7 +1,7 @@
 ﻿namespace Cambios
 {
     using Modelos;
-    using Cambios.Serviços;
+    using Serviços;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Windows.Forms;
@@ -19,6 +19,8 @@
 
         private DialogService dialogService;
 
+        private DataService dataService;
+
         #endregion
 
         public Form1()
@@ -27,6 +29,7 @@
             networkService = new NetworkService();
             apiService = new ApiService();
             dialogService = new DialogService();
+            dataService = new DataService();
             LoadRates();
         }
 
@@ -42,7 +45,7 @@
             {
                 LoadLocalRates();
                 load = false;
-                return;
+               
             }
             else
             {
@@ -54,6 +57,8 @@
             {
                 LabelResultado.Text = "Não há ligação á internet\r\ne não foram préviamente carregadas as taxas.\r\n" +
                     "Tente mais tarde!";
+
+                return;
             }
 
             ComboBoxOrigem.DataSource = Rates;
@@ -85,7 +90,7 @@
 
         private void LoadLocalRates()
         {
-            MessageBox.Show("Não está implementado");
+            Rates = dataService.GetData();
         }
 
         private async Task LoadApiRates()
@@ -95,6 +100,10 @@
             var response = await apiService.GetRates("http://cambios.somee.com", "/api/rates");
 
             Rates = (List<Rate>)response.Result;
+
+            dataService.DeleteData();
+
+            dataService.SaveData(Rates);
         }
 
         private void ButtonConverter_Click(object sender, EventArgs e)
