@@ -39,6 +39,7 @@ namespace Cambios
             this.LabelResultado = new System.Windows.Forms.Label();
             this.LabelStatus = new System.Windows.Forms.Label();
             this.ProgressBar1 = new System.Windows.Forms.ProgressBar();
+            this.ButtonTroca = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -100,6 +101,7 @@ namespace Cambios
             // ButtonConverter
             // 
             this.ButtonConverter.BackColor = System.Drawing.Color.SteelBlue;
+            this.ButtonConverter.Enabled = false;
             this.ButtonConverter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ButtonConverter.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.ButtonConverter.Location = new System.Drawing.Point(649, 64);
@@ -108,6 +110,7 @@ namespace Cambios
             this.ButtonConverter.TabIndex = 6;
             this.ButtonConverter.Text = "Converter";
             this.ButtonConverter.UseVisualStyleBackColor = false;
+            this.ButtonConverter.Click += new System.EventHandler(this.ButtonConverter_Click);
             // 
             // LabelResultado
             // 
@@ -122,11 +125,11 @@ namespace Cambios
             // LabelStatus
             // 
             this.LabelStatus.AutoSize = true;
-            this.LabelStatus.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.LabelStatus.ForeColor = System.Drawing.Color.DarkRed;
+            this.LabelStatus.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.LabelStatus.ForeColor = System.Drawing.Color.SteelBlue;
             this.LabelStatus.Location = new System.Drawing.Point(82, 386);
             this.LabelStatus.Name = "LabelStatus";
-            this.LabelStatus.Size = new System.Drawing.Size(67, 25);
+            this.LabelStatus.Size = new System.Drawing.Size(53, 20);
             this.LabelStatus.TabIndex = 8;
             this.LabelStatus.Text = "Status";
             // 
@@ -137,12 +140,25 @@ namespace Cambios
             this.ProgressBar1.Size = new System.Drawing.Size(225, 23);
             this.ProgressBar1.TabIndex = 9;
             // 
+            // ButtonTroca
+            // 
+            this.ButtonTroca.BackgroundImage = global::Cambios.Properties.Resources.ic_change;
+            this.ButtonTroca.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.ButtonTroca.Enabled = false;
+            this.ButtonTroca.Location = new System.Drawing.Point(674, 152);
+            this.ButtonTroca.Name = "ButtonTroca";
+            this.ButtonTroca.Size = new System.Drawing.Size(69, 49);
+            this.ButtonTroca.TabIndex = 10;
+            this.ButtonTroca.UseVisualStyleBackColor = true;
+            this.ButtonTroca.Click += new System.EventHandler(this.ButtonTroca_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ButtonTroca);
             this.Controls.Add(this.ProgressBar1);
             this.Controls.Add(this.LabelStatus);
             this.Controls.Add(this.LabelResultado);
@@ -173,6 +189,7 @@ namespace Cambios
         private System.Windows.Forms.Label LabelResultado;
         private System.Windows.Forms.Label LabelStatus;
         private System.Windows.Forms.ProgressBar ProgressBar1;
+        private System.Windows.Forms.Button ButtonTroca;
     }
 }
 
